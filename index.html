@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Youtube API Project</title>
+</head>
+
+<style>
+
+    body {
+        z-index: 0;
+        /* background: url('assets/whiteBG.svg') no-repeat; */
+        background-image: url('assets/whiteBG.svg');
+        background-size: cover;
+        background-attachment: fixed;
+
+        text-align: center;
+    }
+
+    #hero-section {
+        /* background: url('assets/whiteBG.svg') no-repeat; */
+        /* background-size: cover; */
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-attachment: fixed;
+        z-index: 1;
+    }
+
+    h1 {
+        color: white;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-weight: 600;
+        font-size: 70px;
+    }
+
+    h3 {
+        color: rgb(255, 255, 255);
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-size: 20px;
+    }
+
+    p {
+        color: white;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-size: 20px;
+    }
+
+    #header {
+        background-color:black;
+        padding: 30px;
+        width: 700px;
+        height: 400px;
+        text-align: left;
+        position: fixed;
+        top: 50%;
+        transform: perspective(1px) translateY(-50%);
+        margin-left: 100px;
+        border-radius: 30px;
+        -webkit-box-shadow: 0 40px 60px rgba(46, 46, 46, 0.5), 0 1px 3px rgba(0, 0, 0, .08);
+        box-shadow: 0 40px 40px rgba(51, 51, 51, 0.8), 0 1px 3px rgba(0, 0, 0, .08);
+
+    }
+
+    #citySelect-section, #content-section {
+        width: 90%;
+        background-color: black;
+        border-radius: 30px;
+
+        position: relative;
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 40px;
+
+        -webkit-box-shadow: 0 4px 6px rgba(46, 46, 46, 0.5), 0 1px 3px rgba(0, 0, 0, .08);
+        box-shadow: 0 40px 60px rgba(51, 51, 51, 0.5), 0 1px 3px rgba(0, 0, 0, .08);
+    }
+
+    #citySelect-section {
+        z-index: 3;
+        border-radius: 30px;
+        height: 400px;
+        top: 98vh;
+        text-align: left;
+    }
+
+    #content-section {
+        z-index: 2;
+        height: 800px;
+        /* padding: 50px; */
+        top: 120vh;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    #videoFrame {
+        position: absolute;
+        float: left;
+        width: 50%;
+        left: 5%;
+        z-index: 1;
+    }
+
+    #spotifyFrame {
+        position: relative;
+        float: right;
+        width: 30%;
+        right: 5%
+    }
+
+    #icons {
+        /* float: right; */
+        position: absolute;
+        top: 15%;
+        left: 65%;
+        margin: 0 auto;
+        width: 200px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .citySelect-text {
+        width: 300px;
+        height: 140px;
+        position: absolute;
+        /* top: 0; */
+        bottom: 35%;
+        left: 3%;
+    }
+
+    .city_cards {
+        width: 880px;
+        height: 350px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 30px;
+        width: 150px;
+        height: 90%;
+        padding: 15px;
+        display: inline-block;
+        box-sizing: border-box;
+        position: relative;
+        margin-right: 20px;
+
+        -webkit-transition: all .15s ease;
+        transition: all .1s ease
+    }
+
+    .card:hover {  
+        transform: translateY(-5px);
+        cursor: pointer;
+    }
+
+    .card:active {
+        transform: translateY(0px);
+        cursor: pointer;
+    }
+
+    .logo {
+        width: 85px;
+        height: 85px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        border-radius: 50%;
+        padding-top: 52px;
+        box-sizing: border-box;
+    }
+
+    .logo-text {
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .artists {
+        /* margin-top: 80px; */
+        position: absolute;
+        bottom: 0;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-weight: bold;
+        color: rgb(100, 100, 100);
+        text-align: left;
+        font-size: 15px;
+    }
+
+
+    
+
+</style>
+
+<body>
+
+    <section id="hero-section">
+        <!-- Main title -->
+        <div id="header">
+            <h1>Tour<br>Melodies</h1>
+            <h3>Is there a city you've always wanted to travel to? 
+                We'll take you there. With music to match.</h3>
+            <div id="icons">
+                <img src="assets/icons.png">
+            </div>
+        </div>  
+    </section>
+
+    <section id="citySelect-section">
+
+        <div class="citySelect-text">
+            <h3>Pick a city. Maybe it's one you've always wanted to visit. Or 
+                maybe it's one you want to remember.
+            </h3>
+        </div>
+
+        <div class="city_cards">
+
+            <div class="card" id="mia">
+                <div class="logo" style="background-color: #45AEDA;">
+                    <div class="logo-text">MIA</div>
+                </div>
+                <div class="artists">
+                    <h4>Notable artists:<br>- Pitbull<br>- Enrique Iglesias<br>- Flo Rida</h4>
+                </div>
+            </div>
+
+            <div class="card" id="chi">
+                <div class="logo" style="background-color: #F20E16;">
+                    <div class="logo-text">CHI</div>
+                </div>
+                <div class="artists">
+                    <h4>Notable artists:<br>- Chance the Rapper<br>- Kanye West<br>- Wilco</h4>
+                </div>
+            </div>
+
+            <div class="card" id="nyc">
+                <div class="logo" style="background-color: #FFB426;">
+                    <div class="logo-text">NYC</div>
+                </div>
+                <div class="artists">
+                    <h4>Notable artists:<br>- Frank Sinatra<br>- Jay-Z<br>- Beyoncé</h4>
+                </div>
+            </div>
+
+            <div class="card" id="atl">
+                <div class="logo" style="background-color: #66BF0C;">
+                    <div class="logo-text">ATL</div>
+                </div>
+                <div class="artists">
+                    <h4>Notable artists:<br>- Playboi Carti<br>- Jay-Z<br>- Beyoncé</h4>
+                </div>
+            </div>
+
+            <div class="card" id="lon">
+                <div class="logo" style="background-color: #D75AA2;">
+                    <div class="logo-text">LON</div>
+                </div>
+                <div class="artists">
+                    <h4>Notable artists:<br>- Playboi Carti<br>- Jay-Z<br>- Beyoncé</h4>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="content-section">
+        
+                <!-- Content behind the curtain -->
+                <div id="frameContent">
+        
+                    <!-- Curtain -->
+                    <div id="cover"></div>
+        
+                    <div id="videoFrame">
+                        <iframe id="ytVideo"
+                                width="100%"
+                                height="500"
+                                src="https://www.youtube.com/embed/kOMWAnxKq58"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen
+                        ></iframe>
+                    </div>
+        
+                    <div id="spotifyFrame" style="position:relative; float:right; width:30%; right:5%">
+                        <iframe id="spotPlaylist"
+                                width="100%"
+                                height="500"
+                                src="https://open.spotify.com/embed/user/mashchicago/playlist/5HirHeUdI5ZEclwidQywpA"
+                                frameborder="0"
+                                allowtransparency="true"
+                                allow="encrypted-media"
+                        ></iframe>
+                    </div>
+                </div>
+    </section>
+
+
+    <script type="text/javascript">
+
+        // Change opacity on scroll.
+        window.addEventListener("scroll", function() {
+            if (window.pageYOffset > 0) {
+                var header = document.getElementById("header");
+                var content_sec = document.getElementById("content-section");
+                var divOffsetTop = content_sec.offsetTop;
+                let opac = 1 - window.pageYOffset / 0.15 / divOffsetTop;
+                header.style.opacity = opac;
+          }
+        })
+
+        // Chicago
+        document.getElementById("chi").onclick = function() {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/kOMWAnxKq58";
+        }
+        // New York City
+        document.getElementById("nyc").onclick = function() {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/7HaJArMDKgI";
+        }
+        // Miami
+        document.getElementById("mia").onclick = function () {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/xkdiqMt8hbw";
+        }
+        // Atlanta
+        document.getElementById("atl").onclick = function () {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/fGJhH0P-izs";
+        }
+        // London
+        document.getElementById("lon").onclick = function () {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/y1OCipyZefA";
+        }
+        // Detroit
+        document.getElementById("det").onclick = function () {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/at_PYHSMu2E";
+        }
+        // San Francisco
+        document.getElementById("san").onclick = function () {
+            document.getElementById('ytVideo').src = "https://www.youtube.com/embed/PGMu_Z89Ao8";
+        }
+    
+    </script>
+
+</body>
+</html>
